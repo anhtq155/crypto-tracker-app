@@ -7,8 +7,10 @@ from .view import MainWindow
 
 class MainApp(App):
     colors = QueryDict()
+    # colors.bg = rgba("#0A051A")
     colors.bg = rgba("#0A051A")
-    colors.primary = rgba("#4F1CE1")
+    # colors.primary = rgba("#4F1CE1")
+    colors.primary = rgba("#f9b17a")
     colors.secondary = [1,1,1, .1]
     colors.success = rgba("#15C097")
     colors.warning = rgba("#F2C94C")
@@ -28,6 +30,7 @@ class MainApp(App):
     fonts.size.h4 = dp(16)
     fonts.size.h5 = dp(14)
     fonts.size.h6 = dp(12)
+    fonts.size.h7 = dp(10)
     fonts.size.extra = dp(32)
 
     fonts.heading = 'assets/fonts/Inter/Inter-Bold.otf'
