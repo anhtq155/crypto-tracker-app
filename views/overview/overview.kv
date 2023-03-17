@@ -1,0 +1,120 @@
+#: import Window kivy.core.window.Window
+
+<Overview>:
+    orientation: 'vertical'
+    spacing: dp(12)
+    BoxLayout:
+        size_hint_y: .3
+        padding: [dp(12), dp(4)]
+        orientation: 'vertical'
+        Text:
+            text: 'Assets Value'
+            color: app.colors.secondary
+            font_size: app.fonts.size.h4
+            halign: "center"
+            valign: 'bottom'
+        Text:
+            text: '$ 54,269.91'
+            color: app.colors.white
+            font_size: app.fonts.size.extra
+            font_name: app.fonts.heading
+            halign: "center"
+        Text:
+            text: 'approx 1.4BTC'
+            color: app.colors.white
+            font_size: app.fonts.size.h5
+            halign: "center"
+            size_hint_y: None
+            height: dp(18)
+        Text:
+            text: '+2.4%'
+            color: app.colors.success
+            font_size: app.fonts.size.h5
+            halign: "center"
+            size_hint_y: None
+            height: dp(18)
+        AnchorLayout:
+            RoundedButton:
+                text: "refresh"
+                font_size: app.fonts.size.h5
+                size_hint: [.25, None]
+                height: dp(28)
+                bcolor: app.colors.white
+                color: app.colors.bg
+                font_name: app.fonts.subheading
+                radius: [self.height/2]
+    BoxLayout:
+        size_hint_y: .3
+        padding: [dp(12), dp(4)]
+        spacing: dp(8)
+        orientation: 'vertical'
+        Text:
+            text: "My Assets"
+            color: app.colors.white
+            font_name: app.fonts.body
+            font_size: app.fonts.size.h4
+            size_hint_y: None
+            height: dp(18)
+        BoxLayout:
+            ScrollView:
+                do_scroll: [True, False]
+                size_hint: [None, None]
+                bar_inactive_color: [0,0,0,0]
+                bar_active_color: [0,0,0,0]
+                size: self.parent.size
+                GridLayout:
+                    id: gl_my_assets
+                    rows: 1
+                    size_hint: [None, None]
+                    size: self.minimum_size
+                    spacing: sp(12)
+    BoxLayout:
+        size_hint_y: .4
+        padding: [dp(12), dp(4)]
+        spacing: dp(8)
+        orientation: 'vertical'
+        Text:
+            text: "My Watchlist"
+            color: app.colors.white
+            font_name: app.fonts.body
+            font_size: app.fonts.size.h4
+            size_hint_y: None
+            height: dp(18)
+        BoxLayout:
+            ScrollView:
+                do_scroll: [False, True]
+                size_hint_y: None
+                height: self.parent.height
+                bar_active_color: [0,0,0,0]
+                bar_inactive_color: [0,0,0,0]
+                GridLayout:
+                    id: gl_watchlist
+                    cols: 1
+                    spacing: dp(4)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+<Asset>:
+    size_hint: [None, None]
+    width: Window.size[0]*.38
+    height: dp(240)
+    canvas.before:
+        Color:
+            rgba: app.colors.secondary
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(12)]
+
+<ListTile>:
+    size_hint_y: None
+    height: dp(54)
+    canvas.before:
+        Color:
+            rgba: app.colors.secondary
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8)]
+        
+    
