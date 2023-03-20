@@ -1,0 +1,254 @@
+#: import LinePlot kivy.garden.graph.LinePlot
+
+<AssetView>:
+    background: ""
+    background_color: app.colors.bg
+    BoxLayout:
+        orientation: "vertical"
+        spacing: dp(12)
+        AnchorLayout:
+            size_hint_y: None
+            height: dp(32)
+            anchor_x: 'left'
+            padding: dp(8)
+            FlatButton:
+                text: icon("icon-arrow-left")
+                color: app.colors.white
+                font_size: app.fonts.size.h2
+                size_hint_x: None
+                width: self.height
+                on_release: root.dismiss()
+        BoxLayout:
+            size_hint_y: None
+            height: dp(128)
+            orientation: "vertical"
+            Text:
+                text: "Asset Value"
+                font_name: app.fonts.body
+                color: app.colors.secondary
+                halign: "center"
+                valign: "bottom"
+                # size_hint_y: None
+                # height: dp(16)
+            Text:
+                text: "$%s"%root.asset_value
+                font_name: app.fonts.heading
+                font_size: app.fonts.size.extra
+                color: app.colors.white
+                # size_hint_y: None
+                halign: "center"
+            Text:
+                text: "+2.4%"
+                font_name: app.fonts.body
+                color: app.colors.success
+                font_size: app.fonts.size.h6
+                halign: "center"
+                valign: "top"
+                # height: dp(14)
+        BoxLayout:
+            size_hint_y: .4
+            orientation: 'vertical'
+            spacing: dp(8)
+            padding: [dp(12), dp(8)]
+            BoxLayout:
+                size_hint_y: None
+                height: dp(32)
+                BoxLayout:
+                    size_hint_x: None
+                    width: self.height
+                    padding: dp(4)
+                    RelativeLayout:
+                        AsyncImage:
+                            id: proxy
+                            source: root.source
+                            opacity: 0
+                        Widget:
+                            canvas.before:
+                                Color:
+                                    rgba: [1,1,1,1]
+                                Ellipse:
+                                    size: self.size[0], self.size[1]
+                                    pos: self.pos
+                                    texture: proxy.texture
+                Text:
+                    text: root.currency
+                    color: app.colors.white
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.h2
+                    size_hint_x: .4
+                BoxLayout:
+                    spacing: dp(4)
+                    padding: [dp(4), dp(4)]
+                    size_hint_x: .6
+                    GraphToggle:
+                        text: "1H"
+                        on_release: root.update_graph('hour')
+                    GraphToggle:
+                        text: "1D"
+                        state: "down"
+                        on_release: root.update_graph()
+                    GraphToggle:
+                        text: "1W"
+                        on_release: root.update_graph('week')
+                    GraphToggle:
+                        text: "1M"
+                        on_release: root.update_graph('month')
+                    GraphToggle:
+                        text: "1Y"
+                        on_release: root.update_graph('year')
+            Graph:
+                id: asset_graph
+                xmax: len(root.chart_data)
+                xmin: 0
+                ymin: 0.1
+                ymax: 7
+                draw_border: False
+        BoxLayout:
+            size_hint_y: .2
+            orientation: "vertical"
+            spacing: dp(8)
+            BoxLayout:
+                spacing: dp(8)
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+            BoxLayout:
+                spacing: dp(8)
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+                BoxLayout:
+                    orientation: "vertical"
+                    Text:
+                        text: "541854"
+                        font_name: app.fonts.subheading
+                        color: app.colors.white
+                        halign: "center"
+                        valign: "bottom"
+                    Text:
+                        text: "Market cap"
+                        font_name: app.fonts.body
+                        color: app.colors.secondary
+                        font_size: app.fonts.size.h6
+                        halign: "center"
+                        valign: "top"
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(108)
+            padding: [dp(12), dp(8)]
+            spacing: dp(12)
+            orientation: "vertical"
+            BoxLayout:
+                spacing: dp(12)
+                BoxLayout:
+                    padding: dp(1)
+                    canvas.before:
+                        Color:
+                            rgba: app.colors.success
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [dp(8)]
+                    RoundedButton:
+                        text: "SELL %s"%root.currency
+                        color: app.colors.white
+                        bcolor: app.colors.bg
+                        radius: [dp(8)]
+
+                RoundedButton:
+                    text: "BUY %s"%root.currency
+                    color: app.colors.white
+                    bcolor: app.colors.success
+                    radius: [dp(8)]
+            BoxLayout:
+                RoundedButton:
+                    text: "Add to Watchlist"
+                    color: app.colors.white
+                    bcolor: app.colors.primary
+                    radius: [dp(8)]
+
+<GraphToggle@ToggleButton>:
+    background_color: [0,0,0,0]
+    background_normal: ""
+    background_down: ""
+    background_disabled: ""
+    group: 'graph-tabs'
+    font_size: app.fonts.size.h6
+    color: app.colors.white
+    canvas.before:
+        Color:
+            rgba: app.colors.secondary if self.state == 'down' else [0,0,0,0]
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height*.1]
