@@ -20,6 +20,7 @@ class AssetView(ModalView):
     weekly_data = ListProperty([0,1])
     monthly_data = ListProperty([0,1])
     yearly_data = ListProperty([0,1])
+    data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         Clock.schedule_once(self.render, .2)
@@ -32,6 +33,22 @@ class AssetView(ModalView):
 
         self.ids.asset_graph.add_plot(plot)
 
+    def on_data(self, inst, data):
+        """
+            Expected data
+            =======================
+            ['id', 'symbol', 'name', 'image', 'current_price', 'market_cap', 'market_cap_rank', 'fully_diluted_valuation', 'total_volume', 'high_24h', 'low_24h', 'price_change_24h', 'price_change_percentage_24h', 'market_cap_change_24h', 'market_cap_change_percentage_24h', 'circulating_supply', 'total_supply', 'max_supply', 'ath', 'ath_change_percentage', 'ath_date', 'atl', 'atl_change_percentage', 'atl_date', 'roi', 'last_updated']
+        """
+        self.ids.market_cap.text = str(data['market_cap'])
+        self.ids.low.text = str(data['low_24h'])
+        self.ids.volume.text = str(data['total_volume'])
+        self.ids.high.text = str(data['high_24h'])
+        self.ids.circulating_supply.text = str(data['circulating_supply'])
+        self.ids.total_supply.text = str(data['total_supply'])
+
+        price_change = str(data['price_change_percentage_24h'])[:4] + "%"
+        price_change = price_change.replace("+-", "-")
+        self.ids.price_change.text = price_change
     
     def update_graph(self, data_type="day"):
         if data_type == 'hour':
@@ -40,7 +57,7 @@ class AssetView(ModalView):
             target = self.day_data
         elif data_type == 'week':
             target = self.weekly_data
-            print(target)
+            # print(target)
         elif data_type == 'month':
             target = self.monthly_data
         elif data_type == 'year':

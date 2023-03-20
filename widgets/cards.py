@@ -64,9 +64,9 @@ Builder.load_string("""
         BoxLayout:
             size_hint_x: .5
             Text:
+                id: price_change
                 size_hint_x: None
                 width: dp(48)
-                text: "+%s"%str(root.price_change)[:4]
                 halign: 'left'
                 font_name: app.fonts.subheading
                 font_size: sp(10)
@@ -128,7 +128,7 @@ Builder.load_string("""
             font_name: app.fonts.subheading
             color: app.colors.white
     BoxLayout:
-        size_hint_x: .55
+        size_hint_x: .48
         Text:
             text: "$%s"%str(root.price)
             font_name: app.fonts.subheading
@@ -136,9 +136,9 @@ Builder.load_string("""
             color: app.colors.white
             font_size: app.fonts.size.h5
         Text:
+            id: price_change
             size_hint_x: None
             width: dp(48)
-            text: "+%s"%str(root.price_change)
             halign: 'right'
             font_name: app.fonts.subheading
             font_size: app.fonts.size.h6
@@ -163,6 +163,14 @@ class Card(ButtonBehavior, BoxLayout):
         self.cg = CoinGeckoAPI()
         self.from_view = False
         self.bind(on_release=self.view_asset)
+    
+    def on_price_change(self, inst, value):
+        new_price = f"+{value}"
+        new_price = new_price.replace("+-", "-")[:5]
+        self.ids.price_change.text = new_price + "%"
+
+        if new_price.startswith("-"):
+            self.ids.price_change.color = App.get_running_app().colors.danger
 
     def view_asset(self, *args):
         """
@@ -193,6 +201,7 @@ class Card(ButtonBehavior, BoxLayout):
         av.weekly_data = self.weekly_prices
         av.monthly_data = self.monthly_prices
         av.yearly_data = self.yearly_prices
+        av.data = self.data
         av.open()
         Clock.schedule_once(lambda x: av.update_graph(), .5)
     
@@ -269,10 +278,5 @@ class Asset(Card):
 
 
 class ListTile(Card):
-    source = StringProperty("")
-    text = StringProperty("")
-    price = NumericProperty(0.0)
-    price_change = NumericProperty(0.0)
-    data = ObjectProperty()
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
