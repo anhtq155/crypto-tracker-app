@@ -38,7 +38,7 @@
                 # size_hint_y: None
                 halign: "center"
             Text:
-                text: "+2.4%"
+                id: price_change
                 font_name: app.fonts.body
                 color: app.colors.success
                 font_size: app.fonts.size.h6
@@ -112,7 +112,7 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: market_cap
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
@@ -127,13 +127,13 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: circulating_supply
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
                         valign: "bottom"
                     Text:
-                        text: "Market cap"
+                        text: "Circulating Supply"
                         font_name: app.fonts.body
                         color: app.colors.secondary
                         font_size: app.fonts.size.h6
@@ -142,13 +142,13 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: total_supply
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
                         valign: "bottom"
                     Text:
-                        text: "Market cap"
+                        text: "Total Supply"
                         font_name: app.fonts.body
                         color: app.colors.secondary
                         font_size: app.fonts.size.h6
@@ -159,13 +159,13 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: low
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
                         valign: "bottom"
                     Text:
-                        text: "Market cap"
+                        text: "24hr Low"
                         font_name: app.fonts.body
                         color: app.colors.secondary
                         font_size: app.fonts.size.h6
@@ -174,13 +174,13 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: volume
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
                         valign: "bottom"
                     Text:
-                        text: "Market cap"
+                        text: "Total Volume"
                         font_name: app.fonts.body
                         color: app.colors.secondary
                         font_size: app.fonts.size.h6
@@ -189,13 +189,13 @@
                 BoxLayout:
                     orientation: "vertical"
                     Text:
-                        text: "541854"
+                        id: high
                         font_name: app.fonts.subheading
                         color: app.colors.white
                         halign: "center"
                         valign: "bottom"
                     Text:
-                        text: "Market cap"
+                        text: "24hr High"
                         font_name: app.fonts.body
                         color: app.colors.secondary
                         font_size: app.fonts.size.h6
