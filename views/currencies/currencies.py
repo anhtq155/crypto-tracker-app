@@ -27,7 +27,7 @@ class Currency(BoxLayout):
         t1.start()
 
     def get_coins(self):
-        mkts = self.cg.get_coins_markets(vs_currency="usd", per_page=50)
+        mkts = self.cg.get_coins_markets(vs_currency="usd", per_page=10)
         self.coins = mkts
     
     @mainthread
