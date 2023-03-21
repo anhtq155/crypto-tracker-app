@@ -5,7 +5,7 @@ from kivy.utils import QueryDict, rgba
 from kivy.metrics import dp, sp
 
 from .view import MainWindow
-from api import Kraken
+from api import Kraken, OKcoin
 
 
 class MainApp(App):
@@ -42,7 +42,7 @@ class MainApp(App):
 
 
     kraken = Kraken()
-    # okcoin = OKcoin()
+    okcoin = OKcoin()
 
     if os.path.exists("keys.json"):
         with open("keys.json", "r") as f:
@@ -53,7 +53,10 @@ class MainApp(App):
         if 'KRAKEN' in k:
             kraken.api_key = all_keys['KRAKEN']['keys']['key']
             kraken.api_sec = all_keys['KRAKEN']['keys']['secret']
-
+        if 'OKCOIN' in k:
+            okcoin.api_key = all_keys['OKCOIN']['keys']['key']
+            okcoin.api_sec = all_keys['OKCOIN']['keys']['secret']
+            okcoin.pass_phrase = all_keys['OKCOIN']['keys']['passphrase']
 
     def build(self):
         return MainWindow()

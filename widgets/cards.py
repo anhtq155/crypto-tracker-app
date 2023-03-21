@@ -203,8 +203,9 @@ class Card(ButtonBehavior, BoxLayout):
         av.yearly_data = self.yearly_prices
         av.data = self.data
         av.open()
-        Clock.schedule_once(lambda x: av.update_graph(), .5)
-    
+        # Clock.schedule_once(lambda x: av.update_graph(), .5)
+        Clock.schedule_once(lambda x: av.update_graph(), 1)
+
     def get_data(self):
         coin_id = self.data['id']
 

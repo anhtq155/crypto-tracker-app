@@ -30,27 +30,51 @@ class Exchange(BoxLayout):
     def render(self, _):
         exchanges = [
             {
-                "id": "35235",
                 "title": "KRAKEN",
                 "source": "assets/imgs/kraken_logo.png",
+                "require_pass": False,
                 "connected": False,
                 "keys": {
-                    "key": "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX",
-                    "secret": "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ=="
+                    "key":"",
+                    "secret": ""
                 }
             },
             {
-                "id": "35215",
                 "title": "OKCOIN",
                 "source": "assets/imgs/ok-coin.png",
+                "require_pass": True,
                 "connected": False,
                 "keys": {
-                    "key": "2b8248a6-3dfb-4f40-b44f-cfa32f18e195",
-                    "secret": "66072F864FC529751ED9A0BA9049067E",
-                    "passphrase": "#hash537/OK"
+                    "key": "",
+                    "secret": "",
+                    "passphrase": ""
                 }
             },
         ]
+
+        keys = ['KRAKEN', 'OKCOIN']
+        if os.path.exists("keys.json"):
+            data = []
+            with open("keys.json", "r") as f:
+                all_keys = json.load(f)
+
+            for k,v in all_keys.items():
+                data.append(v)
+                if k in keys:
+                    ind = -1
+                    for i,e in enumerate(exchanges):
+                        if e['title'] == k:
+                            ind = i
+                
+                    if ind > -1:
+                        exchanges.pop(ind)
+            
+            for e in exchanges:
+                data.append(e)
+            
+            exchanges = data
+            print(exchanges)
+
 
         grid = self.ids.gl_connected
         exc = self.ids.gl_exchanges
@@ -63,6 +87,7 @@ class Exchange(BoxLayout):
                 ex.title = e['title']
                 ex.source = e['source']
                 ex.connected = e['connected']
+                ex.require_pass = e['require_pass']
                 ex.keys = e['keys']
 
                 grid.add_widget(ex)
@@ -71,6 +96,7 @@ class Exchange(BoxLayout):
             ev.title = e['title']
             ev.source = e['source']
             ev.connected = e['connected']
+            ev.require_pass = e['require_pass']
             ev.keys = e['keys']
 
             exc.add_widget(ev)
@@ -81,6 +107,7 @@ class BaseExchange(BoxLayout):
     source = StringProperty("")
     connected = BooleanProperty(False)
     keys = ObjectProperty(allownone=True)
+    require_pass = BooleanProperty(False)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
 
@@ -100,8 +127,7 @@ class ExchangeTile(BaseExchange):
         ne.source = self.source
         ne.title = self.title
 
-        if self.keys.get("passphrase"):
-            ne.passphrase = True
+        ne.passphrase = self.require_pass
         ne.open()
 
 class NewExchange(ModalView):
@@ -132,6 +158,7 @@ class NewExchange(ModalView):
             "title": self.title,
             "source": self.source,
             "connected": True,
+            "require_pass": self.passphrase,
             "keys": {
                 "key": api_key,
                 "secret": api_secret
