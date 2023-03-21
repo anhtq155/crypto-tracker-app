@@ -11,8 +11,10 @@ class Kraken(object):
     api_url = "https://api.kraken.com"
 
     # Get from: https://www.okcoin.com/account/my-api/create (Must be signed in obviously)
-    api_key = "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX"    
-    api_sec = "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ=="
+    # api_key = "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX"    
+    # api_sec = "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ=="
+    api_key = None    
+    api_sec = None
 
     def get_kraken_signature(self, urlpath, data):
         postdata = urllib.parse.urlencode(data)
@@ -25,6 +27,9 @@ class Kraken(object):
 
     # Attaches auth headers and returns results of a POST request
     def kraken_request(self, uri_path, data):
+        if not self.api_key:
+            return 0
+
         headers = {}
         headers['API-Key'] = self.api_key
         # get_kraken_signature() as defined in the 'Authentication' section
@@ -51,7 +56,13 @@ class Kraken(object):
             "nonce": str(int(1000*time.time()))
         })
 
-        return resp.json()
+        print(f"[]{self.api_key}[]")
+        if not resp:
+            return {'code': 404}
+
+        resp = resp.json()
+        resp['code'] = 200
+        return resp
 
     def cancel_order(self, order_id):
         resp = self.kraken_request('/0/private/CancelOrder', {

@@ -1,9 +1,12 @@
+import os, json
 
 from kivy.app import App
 from kivy.utils import QueryDict, rgba
 from kivy.metrics import dp, sp
 
 from .view import MainWindow
+from api import Kraken, OKcoin
+
 
 class MainApp(App):
     colors = QueryDict()
@@ -36,6 +39,24 @@ class MainApp(App):
     fonts.heading = 'assets/fonts/Inter/Inter-Bold.otf'
     fonts.subheading = 'assets/fonts/Inter/Inter-Regular.otf'
     fonts.body = 'assets/fonts/Inter/Inter-Light.otf'
+
+
+    kraken = Kraken()
+    okcoin = OKcoin()
+
+    if os.path.exists("keys.json"):
+        with open("keys.json", "r") as f:
+            all_keys = json.load(f)
+        
+        k = [x for x in all_keys.keys()]
+
+        if 'KRAKEN' in k:
+            kraken.api_key = all_keys['KRAKEN']['keys']['key']
+            kraken.api_sec = all_keys['KRAKEN']['keys']['secret']
+        if 'OKCOIN' in k:
+            okcoin.api_key = all_keys['OKCOIN']['keys']['key']
+            okcoin.api_sec = all_keys['OKCOIN']['keys']['secret']
+            okcoin.pass_phrase = all_keys['OKCOIN']['keys']['passphrase']
 
     def build(self):
         return MainWindow()

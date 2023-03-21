@@ -14,7 +14,7 @@
             halign: "center"
             valign: 'bottom'
         Text:
-            text: '$ 54,269.91'
+            text: '$ %s'%str(root.current_balance)
             color: app.colors.white
             font_size: app.fonts.size.extra
             font_name: app.fonts.heading
@@ -43,6 +43,7 @@
                 color: app.colors.bg
                 font_name: app.fonts.subheading
                 radius: [self.height/2]
+                on_release: app.kraken.get_balance()
     BoxLayout:
         size_hint_y: .35
         padding: [dp(12), dp(4)]
