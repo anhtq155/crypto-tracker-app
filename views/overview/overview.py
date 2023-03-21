@@ -48,6 +48,7 @@ class Overview(BoxLayout):
             a.price_change = v['market_cap_change_percentage_24h']
 
             a.owned = owned
+            print(owned)
             grid.add_widget(a)
 
     @mainthread
@@ -97,9 +98,11 @@ class Overview(BoxLayout):
 
             tgt_coin = [x for x in coins if x['symbol'] == symbol][0]
 
-            owned = float(b)*float(tgt_coin['current_price'])
+            owned = float(b)*float(tgt_coin['current_price'])   
             total + owned
+        print(total)
         self.current_balance = round(total, 3)
+        
 
 
     def get_assets(self):
