@@ -11,8 +11,8 @@ class Kraken(object):
     api_url = "https://api.kraken.com"
 
     # Get from: https://www.okcoin.com/account/my-api/create (Must be signed in obviously)
-    # api_key = "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX" "tQlb2OyuestuYxc57iHQ8N/8VPIxT7CGi60Nfpz/y5yoWa2SrG3GJwwH"    
-    # api_sec = "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ==" "tLLJdOLEarKDzh++7a/gmnq3WmCPKw1y+YaSIZ3n2ahRT+896EY71iIfBVh31XTWnu0Hw7PapcdggF0f0fSvnQ=="
+    # api_key = "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX"    
+    # api_sec = "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ=="
     api_key = None    
     api_sec = None
 
@@ -58,10 +58,11 @@ class Kraken(object):
 
         print(f"[]{self.api_key}[]")
         if not resp:
-            return
+            return {'code': 404}
 
-        print(resp.json())
-        # return resp.json()
+        resp = resp.json()
+        resp['code'] = 200
+        return resp
 
     def cancel_order(self, order_id):
         resp = self.kraken_request('/0/private/CancelOrder', {

@@ -120,11 +120,14 @@ class OKcoin(object):
         print("Getting balance...")
         resp = self.okcoin_request(GET, "/api/spot/v3/accounts")
 
+        print(f"[]{self.api_key}[]")
         if not resp:
-            return
-        print(json.loads(resp.content))
+            return {"code": 404}
         
-        return json.loads(resp.content)
+        data = {"result": json.loads(resp.content)}
+        data['code'] = 200
+        
+        return data
 
     def cancel_order(self, order_id):
         """
