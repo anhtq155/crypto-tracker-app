@@ -1,3 +1,4 @@
+
 <Signin>:
     orientation: "vertical"
     spacing: dp(12)
@@ -6,14 +7,14 @@
         orientation: "vertical"
         size_hint_y: .35
         Text:
-            text: "Hello there"
+            text: "Welcome Sir"
             color: app.colors.white
             font_size: app.fonts.size.extra
             font_name: app.fonts.heading
             halign: 'center'
             valign: "bottom"
         Text:
-            text: "Please login below"
+            text: "Please login"
             color: app.colors.white
             font_size: app.fonts.size.h5
             font_name: app.fonts.body
@@ -53,8 +54,9 @@
             bcolor: app.colors.primary
             size_hint_y: None
             height: dp(42)
+            on_release: root.signin()
         FlatButton:
-            text: "Signup instead"
+            text: "Don't have an account yet? Sign up"
             color: app.colors.primary
             font_name: app.fonts.body
             radius: [dp(8)]

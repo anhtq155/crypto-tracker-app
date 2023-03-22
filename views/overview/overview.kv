@@ -43,14 +43,14 @@
                 color: app.colors.bg
                 font_name: app.fonts.subheading
                 radius: [self.height/2]
-                on_release: app.kraken.get_balance()
+                on_release: root.refresh()
     BoxLayout:
         size_hint_y: .35
         padding: [dp(12), dp(4)]
         spacing: dp(8)
         orientation: 'vertical'
         Text:
-            text: "Assets"
+            text: "My Assets"
             color: app.colors.white
             font_name: app.fonts.body
             font_size: app.fonts.size.h4
@@ -75,7 +75,7 @@
         spacing: dp(8)
         orientation: 'vertical'
         Text:
-            text: "Watchlist"
+            text: "My Watchlist"
             color: app.colors.white
             font_name: app.fonts.body
             font_size: app.fonts.size.h4
@@ -95,3 +95,5 @@
                     size_hint_y: None
                     height: self.minimum_height
 
+
+    

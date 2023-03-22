@@ -1,3 +1,4 @@
+
 <Signup>:
     orientation: "vertical"
     spacing: dp(12)
@@ -13,7 +14,7 @@
             halign: 'center'
             valign: "bottom"
         Text:
-            text: "Fill the form below"
+            text: "Fill the form"
             color: app.colors.white
             font_size: app.fonts.size.h5
             font_name: app.fonts.body
@@ -46,15 +47,16 @@
             size_hint_y: None
             height: dp(42)
         RoundedButton:
-            text: "Sign me up"
+            text: "Sign up"
             color: app.colors.white
             font_name: app.fonts.subheading
             radius: [dp(8)]
             bcolor: app.colors.primary
             size_hint_y: None
             height: dp(42)
+            on_release: root.signup()
         FlatButton:
-            text: "Login instead"
+            text: "Already have an account? Login instead"
             color: app.colors.primary
             font_name: app.fonts.body
             radius: [dp(8)]

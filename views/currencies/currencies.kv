@@ -1,4 +1,5 @@
 
+
 <Currency>:
     orientation: 'vertical' 
     spacing: dp(12)
@@ -48,6 +49,7 @@
                 font_name: app.fonts.body
                 font_size: app.fonts.size.h5
                 size_hint_x: .3
+                on_release: root.refresh()
         BoxLayout:
             ScrollView:
                 do_scroll: [False, True]

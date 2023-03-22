@@ -104,6 +104,10 @@ class Overview(BoxLayout):
             total += owned
         self.current_balance = round(total, 3)
 
+    def refresh(self):
+        App.get_running_app().root.get_coins()
+        t1 = Thread(target=self.get_data, daemon=True)
+        t1.start()
 
     def get_watchlist(self):
         current_list = {}

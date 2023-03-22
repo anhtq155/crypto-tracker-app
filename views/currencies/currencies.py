@@ -15,7 +15,7 @@ from widgets.cards import ListTile, Asset
 Builder.load_file('views/currencies/currencies.kv')
 class Currency(BoxLayout):
     coins = ListProperty([])
-    popular = ListProperty(['btc', 'eth', 'ltc', 'dash', 'shib'])
+    popular = ListProperty(['btc', 'eth', 'doge', 'ltc', 'dash', 'shib'])
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         self.cg = CoinGeckoAPI()
@@ -23,12 +23,11 @@ class Currency(BoxLayout):
         Clock.schedule_once(self.render, .2)
 
     def render(self, _):
-        t1 = Thread(target=self.get_coins, daemon=True)
-        t1.start()
-
-    def get_coins(self):
-        mkts = self.cg.get_coins_markets(vs_currency="usd", per_page=10)
-        self.coins = mkts
+        self.coins = App.get_running_app().root.coins
+    
+    def refresh(self):
+        App.get_running_app().root.get_coins()
+        self.coins = App.get_running_app().root.coins
     
     @mainthread
     def on_coins(self, inst, mkts):

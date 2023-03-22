@@ -1,1 +1,1 @@
-from .assetview import AssetView
+from .assetview import AssetView, Alert
