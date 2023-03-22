@@ -22,8 +22,8 @@ class AssetView(ModalView):
     chart_data = ListProperty([0,1])
     day_data = ListProperty([0,1])
     weekly_data = ListProperty([0,1])
-    # monthly_data = ListProperty([0,1])
-    # yearly_data = ListProperty([0,1])
+    monthly_data = ListProperty([0,1])
+    yearly_data = ListProperty([0,1])
     data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
@@ -62,10 +62,10 @@ class AssetView(ModalView):
         elif data_type == 'week':
             target = self.weekly_data
             # print(target)
-        # elif data_type == 'month':
-        #     target = self.monthly_data
-        # elif data_type == 'year':
-        #     target = self.yearly_data
+        elif data_type == 'month':
+            target = self.monthly_data
+        elif data_type == 'year':
+            target = self.yearly_data
 
         if len(target) > 4:
             self.chart_data = target
@@ -94,16 +94,37 @@ class AssetView(ModalView):
         plots[0].points = points
     
     def place_order(self, buy=True):
+        balances = self.get_balance()
+
         ao = AssetOrder()
         ao.buy = buy
+        ao.asset_value = self.asset_value
         ao.currency = self.currency
-        ao.current_balance = 0.0
+        ao.current_balance = float(balances['usd']) if buy else float(balances[self.currency])
         ao.open()
+    
+    def get_balance(self) -> dict:
+        home = App.get_running_app().root.ids.home
+        overview = home.ids.overview
+
+        usd_balance = overview.current_balance
+        balances = overview.balances
+        owned = 0
+
+        for b in balances:
+            if b['currency'] == self.currency.upper():
+                owned = b['balance']
+                break
+        currency_balance = owned
+        return {'usd': usd_balance, self.currency: currency_balance}
+
 
 class AssetOrder(ModalView):
     buy = BooleanProperty(True)
     currency = StringProperty("BTC")
+    asset_value = NumericProperty(0.0)
     current_balance = NumericProperty(0.0)
+    current_order = StringProperty("0.00")
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         Clock.schedule_once(self.render, .2)
@@ -119,6 +140,9 @@ class AssetOrder(ModalView):
             if k == "-":
                 k = icon("icon-delete")
                 kp.filled = False
+                kp.bind(on_release=self.backspace)
+            else:
+                kp.bind(on_release=self.key_press)
             
             if k == ".":
                 kp.filled = False
@@ -126,6 +150,27 @@ class AssetOrder(ModalView):
 
             anchor.add_widget(kp)
             numpad.add_widget(anchor)
+    
+    def place_order(self, okcoin=True):
+        buy_price = str(self.asset_value)
+        pair = "%s-USD"%self.currency.upper()
+        volume = str(self.current_order)
+
+        order_type = "buy" if self.buy else "sell"
+        if okcoin:
+            App.get_running_app().okcoin.place_order(volume, pair, buy_price, order_type=order_type)
+        else:
+            App.get_running_app().kraken.place_order(volume, pair, buy_price, order_type=order_type)
+
+    def key_press(self, inst):
+        if self.current_order == "0.00":
+            self.current_order = ""
+        self.current_order += str(inst.text)
+    
+    def backspace(self, inst):
+        self.current_order = self.current_order[:-1]
+        if self.current_order == "":
+            self.current_order = "0.00"
 
 class KeyPad(Button):
     filled = BooleanProperty(True)

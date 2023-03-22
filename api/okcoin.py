@@ -26,7 +26,7 @@ class OKcoin(object):
     pass_phrase = None
     # api_key = "1bc30c42-779e-460a-8886-fff446d6f1a2"
     # api_sec = "BBDE37656BA9B382D2B9AE882EC79E46"
-    # pass_phrase = "#Anhtq@155"
+    # pass_phrase = "Anhtq@155"
 
     def get_okcoin_signature(self, t, method, request_path, body=None):
 
@@ -82,6 +82,7 @@ class OKcoin(object):
             Sample Response
             {'client_oid': '', 'code': '0', 'error_code': '0', 'error_message': '', 'message': '', 'order_id': '8850581166765056', 'result': True}
         """
+        print("Placing order...")
         resp = self.okcoin_request(POST, '/api/spot/v3/orders', {
             "type": "limit", 
             "side": order_type, 
@@ -90,6 +91,7 @@ class OKcoin(object):
             "price": buy_price})
         
         data = json.loads(resp.content)
+        print(data)
 
         if data['error_code'] == '0':
             if os.path.exists("orders.json"):
@@ -102,6 +104,7 @@ class OKcoin(object):
             with open("orders.json", "w") as f:
                 json.dump(orders, f)
 
+        print("Order placed...")
         return data
 
     def get_instruments(self):
@@ -120,7 +123,6 @@ class OKcoin(object):
         print("Getting balance...")
         resp = self.okcoin_request(GET, "/api/spot/v3/accounts")
 
-        print(f"[]{self.api_key}[]")
         if not resp:
             return {"code": 404}
         
