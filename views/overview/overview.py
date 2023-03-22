@@ -1,3 +1,7 @@
+from threading import Thread
+import json
+import os
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -8,8 +12,6 @@ from kivy.properties import ListProperty, StringProperty, NumericProperty
 from kivy.clock import Clock, mainthread
 from kivy.garden.graph import LinePlot
 
-from threading import Thread
-import json
 
 from widgets.cards import ListTile, Asset
 
@@ -66,6 +68,7 @@ class Overview(BoxLayout):
             grid.add_widget(a)
 
     def get_data(self):
+        self.get_watchlist()
         kraken_data = App.get_running_app().kraken.get_balance()
         okcoin_data = App.get_running_app().okcoin.get_balance()
 
@@ -102,61 +105,17 @@ class Overview(BoxLayout):
         self.current_balance = round(total, 3)
 
 
-    def get_assets(self):
-        assets = [
-            {
-                "symbol": 'btc',
-                "image": "",
-                "current_price": 423490,
-                "market_cap_change_percentage_24h": 2.52
-            },
-            {
-                "symbol": 'eth',
-                "image": "",
-                "current_price": 23655,
-                "market_cap_change_percentage_24h": 1.23
-            },
-            {
-                "symbol": 'ltc',
-                "image": "",
-                "current_price": 124.8,
-                "market_cap_change_percentage_24h": 2.35
-            },
-            {
-                "symbol": 'dash',
-                "image": "",
-                "current_price": 42.98,
-                "market_cap_change_percentage_24h": 1.32
-            },
-        ]
-        return assets
-
     def get_watchlist(self):
-        assets = [
-            {
-                "symbol": 'btc',
-                "image": "",
-                "current_price": 423490,
-                "market_cap_change_percentage_24h": 2.52
-            },
-            {
-                "symbol": 'eth',
-                "image": "",
-                "current_price": 23655,
-                "market_cap_change_percentage_24h": 1.23
-            },
-            {
-                "symbol": 'ltc',
-                "image": "",
-                "current_price": 124.8,
-                "market_cap_change_percentage_24h": 2.35
-            },
-            {
-                "symbol": 'dash',
-                "image": "",
-                "current_price": 42.98,
-                "market_cap_change_percentage_24h": 1.32
-            },
-        ]
-        return assets
+        current_list = {}
+        if os.path.exists("watchlist.json"):
+            with open("watchlist.json", "r") as f:
+                current_list = json.load(f)
+
+        coins = App.get_running_app().root.coins
+
+        coins = [x for x in coins if x['symbol'].upper() in list(current_list.keys())]
+
+        self.watchlist = coins
+
+        
 

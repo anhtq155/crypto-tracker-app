@@ -1,5 +1,6 @@
+import os
+import json
 
-from locale import currency
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -27,6 +28,7 @@ class AssetView(ModalView):
     data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
+        self.alert = Alert()
         Clock.schedule_once(self.render, .2)
 
     def render(self, _):
@@ -61,7 +63,7 @@ class AssetView(ModalView):
             target = self.day_data
         elif data_type == 'week':
             target = self.weekly_data
-            # print(target)
+            print(target)
         elif data_type == 'month':
             target = self.monthly_data
         elif data_type == 'year':
@@ -118,6 +120,23 @@ class AssetView(ModalView):
         currency_balance = owned
         return {'usd': usd_balance, self.currency: currency_balance}
 
+    def watch(self):
+        home = App.get_running_app().root.ids.home
+        overview = home.ids.overview
+        current_list = {}
+        if os.path.exists("watchlist.json"):
+            with open("watchlist.json", "r") as f:
+                current_list = json.load(f)
+        if not self.currency in list(current_list.keys()):
+            current_list[self.currency] = True
+        
+        with open("watchlist.json", "w") as f:
+            json.dump(current_list, f)
+        
+        self.alert.text = f"{self.currency} Added to watchlist"
+        self.alert.open()
+
+        overview.get_watchlist()
 
 class AssetOrder(ModalView):
     buy = BooleanProperty(True)
@@ -176,3 +195,13 @@ class KeyPad(Button):
     filled = BooleanProperty(True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
+
+class Alert(ModalView):
+    text = StringProperty("")
+    def __init__(self, **kw) -> None:
+        super().__init__(**kw)
+        
+        self.bind(on_open=self.close)
+
+    def close(self, *args):
+        Clock.schedule_once(self.dismiss, 2)

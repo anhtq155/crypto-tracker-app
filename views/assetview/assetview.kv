@@ -92,10 +92,10 @@
                         on_release: root.update_graph('week')
                     GraphToggle:
                         text: "1M"
-                        # on_release: root.update_graph('month')
+                        on_release: root.update_graph('month')
                     GraphToggle:
                         text: "1Y"
-                        # on_release: root.update_graph('year')
+                        on_release: root.update_graph('year')
             Graph:
                 id: asset_graph
                 xmax: len(root.chart_data)
@@ -238,6 +238,7 @@
                     color: app.colors.white
                     bcolor: app.colors.primary
                     radius: [dp(8)]
+                    on_release: root.watch()
 
 <AssetOrder>:
     background: ""
@@ -269,7 +270,7 @@
                 height: dp(64)
                 orientation: 'vertical'
                 Text:
-                    text: "USD Balance" if root.buy else "%s Balance"%root.currency.upper()
+                    text: "USD Balance" if root.buy else "%s Balance"%root.currency
                     font_name: app.fonts.subheading
                     font_size: app.fonts.size.h6
                     color: app.colors.white
@@ -295,7 +296,7 @@
                     halign: 'center'
                     size_hint_y: .4
                 Text:
-                    text: str(root.current_balance)
+                    text: str(root.current_order)
                     font_name: app.fonts.heading
                     font_size: app.fonts.size.extra
                     color: app.colors.white
@@ -319,6 +320,9 @@
                     bcolor: app.colors.success
                     color: app.colors.white
                     radius: [self.height*.2]
+                    on_release:
+                        root.dismiss()
+                        root.place_order()
 
 <KeyPad>:
     background_color: [0,0,0,0]
@@ -334,6 +338,25 @@
         Ellipse:
             size: self.size[0], self.size[1]
             pos: self.pos
+
+<Alert>:
+    background_color: [0,0,0,0]
+    background: ""
+    AnchorLayout:
+        anchor_y: 'bottom'
+        padding: dp(16)
+        BackBox:
+            radius: [self.height/2]
+            bcolor: app.colors.secondary
+            size_hint_x: .8
+            padding: [dp(10), dp(4)]
+            size_hint_y: None
+            height: dp(32)
+            Text:
+                text: root.text
+                color: app.colors.white
+                font_name: app.fonts.subheading
+                halign: 'center'
     
 <GraphToggle@ToggleButton>:
     background_color: [0,0,0,0]
