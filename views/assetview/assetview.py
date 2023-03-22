@@ -17,8 +17,8 @@ class AssetView(ModalView):
     source = StringProperty("")
     chart_data = ListProperty([0,1])
     day_data = ListProperty([0,1])
-    weekly_data = ListProperty([0,1])
-    monthly_data = ListProperty([0,1])
+    # weekly_data = ListProperty([0,1])
+    # monthly_data = ListProperty([0,1])
     yearly_data = ListProperty([0,1])
     data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
@@ -58,10 +58,10 @@ class AssetView(ModalView):
         elif data_type == 'week':
             target = self.weekly_data
             # print(target)
-        elif data_type == 'month':
-            target = self.monthly_data
-        elif data_type == 'year':
-            target = self.yearly_data
+        # elif data_type == 'month':
+        #     target = self.monthly_data
+        # elif data_type == 'year':
+        #     target = self.yearly_data
 
         if len(target) > 4:
             self.chart_data = target
