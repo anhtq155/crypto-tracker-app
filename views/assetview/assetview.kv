@@ -224,12 +224,14 @@
                         color: app.colors.white
                         bcolor: app.colors.bg
                         radius: [dp(8)]
+                        on_release: root.place_order(False)
 
                 RoundedButton:
                     text: "BUY %s"%root.currency
                     color: app.colors.white
                     bcolor: app.colors.success
                     radius: [dp(8)]
+                    on_release: root.place_order(True)
             BoxLayout:
                 RoundedButton:
                     text: "Add to Watchlist"
@@ -237,6 +239,102 @@
                     bcolor: app.colors.primary
                     radius: [dp(8)]
 
+<AssetOrder>:
+    background: ""
+    background_color: [0,0,0, .1]
+    AnchorLayout:
+        anchor_y: 'bottom'
+        BackBox:
+            bcolor: app.colors.tertiary
+            orientation: "vertical"
+            spacing: dp(12)
+            padding: dp(12)
+            size_hint_y: .75
+            BoxLayout:
+                size_hint_y: None
+                height: dp(32)
+                Text:
+                    text: "Buy %s"%root.currency if root.buy else "Sell %s"%root.currency
+                    font_name: app.fonts.subheading
+                    font_size: app.fonts.size.h4
+                    color: app.colors.white
+                FlatButton:
+                    size_hint_x: None
+                    width: self.height
+                    text: icon("icon-x")
+                    color: app.colors.white
+                    on_release: root.dismiss()
+            BoxLayout:
+                size_hint_y: None
+                height: dp(64)
+                orientation: 'vertical'
+                Text:
+                    text: "USD Balance" if root.buy else "%s Balance"%root.currency.upper()
+                    font_name: app.fonts.subheading
+                    font_size: app.fonts.size.h6
+                    color: app.colors.white
+                    halign: 'center'
+                    size_hint_y: .4
+                Text:
+                    text: str(root.current_balance)
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.extra
+                    color: app.colors.white
+                    halign: 'center'
+                    valign: 'top'
+                    size_hint_y: .6
+            BoxLayout:
+                size_hint_y: None
+                height: dp(64)
+                orientation: 'vertical'
+                Text:
+                    text: "Buy" if root.buy else "Sell"
+                    font_name: app.fonts.subheading
+                    font_size: app.fonts.size.h6
+                    color: app.colors.white
+                    halign: 'center'
+                    size_hint_y: .4
+                Text:
+                    text: str(root.current_balance)
+                    font_name: app.fonts.heading
+                    font_size: app.fonts.size.extra
+                    color: app.colors.white
+                    halign: 'center'
+                    size_hint_y: .6
+            GridLayout:
+                id: numpad
+                spacing: dp(12)
+                cols: 3
+            BoxLayout:
+                size_hint_y: None
+                height: dp(42)
+                spacing: dp(12)
+                RoundedButton:
+                    text: "KRAKEN | Buy %s"%root.currency if root.buy else "KRAKEN | Sell %s"%root.currency
+                    bcolor: app.colors.success
+                    color: app.colors.white
+                    radius: [self.height*.2]
+                RoundedButton:
+                    text: "OKCOIN | Buy %s"%root.currency if root.buy else "OKCOIN | Sell %s"%root.currency
+                    bcolor: app.colors.success
+                    color: app.colors.white
+                    radius: [self.height*.2]
+
+<KeyPad>:
+    background_color: [0,0,0,0]
+    background_normal: ""
+    background_down: ""
+    color: app.colors.white
+    size_hint_x: None
+    width: self.height
+    markup: True
+    canvas.before:
+        Color:
+            rgba: app.colors.secondary if self.filled else [0,0,0,0]
+        Ellipse:
+            size: self.size[0], self.size[1]
+            pos: self.pos
+    
 <GraphToggle@ToggleButton>:
     background_color: [0,0,0,0]
     background_normal: ""

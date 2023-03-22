@@ -45,10 +45,10 @@ class Overview(BoxLayout):
             a.text = str(v['symbol']).upper()
             a.source = v['image']
             a.price = v['current_price']
+            a.data = v
             a.price_change = v['market_cap_change_percentage_24h']
 
             a.owned = owned
-            print(owned)
             grid.add_widget(a)
 
     @mainthread
@@ -62,6 +62,7 @@ class Overview(BoxLayout):
             a.source = v['image']
             a.price = v['current_price']
             a.price_change = v['market_cap_change_percentage_24h']
+            a.data = v
             grid.add_widget(a)
 
     def get_data(self):
@@ -86,9 +87,7 @@ class Overview(BoxLayout):
 
         coins = [x for x in coins if x['symbol'].upper() in balances_symbols]
         self.assets = coins
-        """
-            'id': 'bitcoin', 'symbol': 'btc', 'name': 'Bitcoin', 'image': 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'current_price': 41219, 'market_cap': 785434733712, 'market_cap_rank': 1, 'fully_diluted_valuation': 867281629120, 'total_volume': 29005677029, 'high_24h': 42859, 'low_24h': 41208, 'price_change_24h': -37.345511788662, 'price_change_percentage_24h': -0.09052, 'market_cap_change_24h': 1340569965, 'market_cap_change_percentage_24h': 0.17097, 'circulating_supply': 19018193.0, 'total_supply': 21000000.0, 'max_supply': 21000000.0, 'ath': 69045, 'ath_change_percentage': -38.13691, 'ath_date': '2021-11-10T14:24:11.849Z', 'atl': 67.81, 'atl_change_percentage': 62890.49777, 'atl_date': '2013-07-06T00:00:00.000Z', 'roi': None, 'last_updated': '2022-04-21T20:15:09.291Z'}
-        """
+        
         total = 0
         for i, b in enumerate(balances_balance):
             symbol = balances_symbols[i].lower()
@@ -98,11 +97,9 @@ class Overview(BoxLayout):
 
             tgt_coin = [x for x in coins if x['symbol'] == symbol][0]
 
-            owned = float(b)*float(tgt_coin['current_price'])   
-            total + owned
-        print(total)
+            owned = float(b)*float(tgt_coin['current_price'])
+            total += owned
         self.current_balance = round(total, 3)
-        
 
 
     def get_assets(self):

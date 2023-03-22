@@ -1,13 +1,17 @@
 
+from locale import currency
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.button import Button
 from kivy.uix.modalview import ModalView
 from kivy.metrics import dp, sp
 from kivy.utils import rgba, QueryDict
 from kivy.properties import ColorProperty, ObjectProperty, BooleanProperty, ListProperty, StringProperty, NumericProperty
 
 from kivy.garden.graph import LinePlot
+from kivy.garden.iconfonts import icon
 from kivy.clock import Clock
 
 Builder.load_file('views/assetview/assetview.kv')
@@ -17,9 +21,9 @@ class AssetView(ModalView):
     source = StringProperty("")
     chart_data = ListProperty([0,1])
     day_data = ListProperty([0,1])
-    # weekly_data = ListProperty([0,1])
+    weekly_data = ListProperty([0,1])
     # monthly_data = ListProperty([0,1])
-    yearly_data = ListProperty([0,1])
+    # yearly_data = ListProperty([0,1])
     data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
@@ -88,3 +92,42 @@ class AssetView(ModalView):
         graph.ymax = ymax
         graph.ymin = ymin
         plots[0].points = points
+    
+    def place_order(self, buy=True):
+        ao = AssetOrder()
+        ao.buy = buy
+        ao.currency = self.currency
+        ao.current_balance = 0.0
+        ao.open()
+
+class AssetOrder(ModalView):
+    buy = BooleanProperty(True)
+    currency = StringProperty("BTC")
+    current_balance = NumericProperty(0.0)
+    def __init__(self, **kw) -> None:
+        super().__init__(**kw)
+        Clock.schedule_once(self.render, .2)
+
+    def render(self, _):
+        keys = '789456123.0-'
+        numpad = self.ids.numpad
+        numpad.clear_widgets()
+
+        for k in keys:
+            anchor = AnchorLayout()
+            kp = KeyPad()
+            if k == "-":
+                k = icon("icon-delete")
+                kp.filled = False
+            
+            if k == ".":
+                kp.filled = False
+            kp.text = str(k)
+
+            anchor.add_widget(kp)
+            numpad.add_widget(anchor)
+
+class KeyPad(Button):
+    filled = BooleanProperty(True)
+    def __init__(self, **kw) -> None:
+        super().__init__(**kw)

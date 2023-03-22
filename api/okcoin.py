@@ -24,9 +24,9 @@ class OKcoin(object):
     api_key = None
     api_sec = None
     pass_phrase = None
-    # api_key = "2b8248a6-3dfb-4f40-b44f-cfa32f18e195"
-    # api_sec = "66072F864FC529751ED9A0BA9049067E"
-    # pass_phrase = "#hash537/OK"
+    # api_key = "1bc30c42-779e-460a-8886-fff446d6f1a2"
+    # api_sec = "BBDE37656BA9B382D2B9AE882EC79E46"
+    # pass_phrase = "#Anhtq@155"
 
     def get_okcoin_signature(self, t, method, request_path, body=None):
 
