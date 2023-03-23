@@ -44,19 +44,22 @@ class MainApp(App):
     kraken = Kraken()
     okcoin = OKcoin()
 
-    if os.path.exists("keys.json"):
-        with open("keys.json", "r") as f:
-            all_keys = json.load(f)
-        
-        k = [x for x in all_keys.keys()]
-
-        if 'KRAKEN' in k:
-            kraken.api_key = all_keys['KRAKEN']['keys']['key']
-            kraken.api_sec = all_keys['KRAKEN']['keys']['secret']
-        if 'OKCOIN' in k:
-            okcoin.api_key = all_keys['OKCOIN']['keys']['key']
-            okcoin.api_sec = all_keys['OKCOIN']['keys']['secret']
-            okcoin.pass_phrase = all_keys['OKCOIN']['keys']['passphrase']
-
     def build(self):
+        upath = self.user_data_dir
+        save_path = os.path.join(upath, "keys.json")
+        if os.path.exists(save_path):
+            with open(save_path, "r") as f:
+                all_keys = json.load(f)
+            
+            k = [x for x in all_keys.keys()]
+
+            if 'KRAKEN' in k:
+                self.kraken.api_key = all_keys['KRAKEN']['keys']['key']
+                self.kraken.api_sec = all_keys['KRAKEN']['keys']['secret']
+
+            if 'OKCOIN' in k:
+                self.okcoin.api_key = all_keys['OKCOIN']['keys']['key']
+                self.okcoin.api_sec = all_keys['OKCOIN']['keys']['secret']
+                self.okcoin.pass_phrase = all_keys['OKCOIN']['keys']['passphrase']
+
         return MainWindow()

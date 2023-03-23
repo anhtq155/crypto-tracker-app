@@ -68,7 +68,7 @@ class Overview(BoxLayout):
             grid.add_widget(a)
 
     def get_data(self):
-        self.get_watchlist()
+        # self.get_watchlist()
         kraken_data = App.get_running_app().kraken.get_balance()
         okcoin_data = App.get_running_app().okcoin.get_balance()
 
@@ -105,14 +105,21 @@ class Overview(BoxLayout):
         self.current_balance = round(total, 3)
 
     def refresh(self):
-        App.get_running_app().root.get_coins()
+        try:
+            App.get_running_app().root.get_coins()
+        except:
+            pass
         t1 = Thread(target=self.get_data, daemon=True)
         t1.start()
+        
 
     def get_watchlist(self):
         current_list = {}
-        if os.path.exists("watchlist.json"):
-            with open("watchlist.json", "r") as f:
+        upath = App.get_running_app().user_data_dir
+        save_path = os.path.join(upath, "watchlist.json")
+
+        if os.path.exists(save_path):
+            with open(save_path, "r") as f:
                 current_list = json.load(f)
 
         coins = App.get_running_app().root.coins

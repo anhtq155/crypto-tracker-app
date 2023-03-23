@@ -23,8 +23,8 @@ class AssetView(ModalView):
     chart_data = ListProperty([0,1])
     day_data = ListProperty([0,1])
     weekly_data = ListProperty([0,1])
-    monthly_data = ListProperty([0,1])
-    yearly_data = ListProperty([0,1])
+    # monthly_data = ListProperty([0,1])
+    # yearly_data = ListProperty([0,1])
     data = ObjectProperty(allownone=True)
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
@@ -63,11 +63,11 @@ class AssetView(ModalView):
             target = self.day_data
         elif data_type == 'week':
             target = self.weekly_data
-            print(target)
-        elif data_type == 'month':
-            target = self.monthly_data
-        elif data_type == 'year':
-            target = self.yearly_data
+        #     print(target)
+        # elif data_type == 'month':
+        #     target = self.monthly_data
+        # elif data_type == 'year':
+        #     target = self.yearly_data
 
         if len(target) > 4:
             self.chart_data = target
@@ -124,13 +124,16 @@ class AssetView(ModalView):
         home = App.get_running_app().root.ids.home
         overview = home.ids.overview
         current_list = {}
-        if os.path.exists("watchlist.json"):
-            with open("watchlist.json", "r") as f:
+
+        upath = App.get_running_app().user_data_dir
+        save_path = os.path.join(upath, "watchlist.json")
+        if os.path.exists(save_path):
+            with open(save_path, "r") as f:
                 current_list = json.load(f)
         if not self.currency in list(current_list.keys()):
             current_list[self.currency] = True
         
-        with open("watchlist.json", "w") as f:
+        with open(save_path, "w") as f:
             json.dump(current_list, f)
         
         self.alert.text = f"{self.currency} Added to watchlist"

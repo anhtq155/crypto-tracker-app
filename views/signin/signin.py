@@ -35,8 +35,11 @@ class Signin(BoxLayout):
         passw = hashlib.sha256(bytes(passw, encoding="utf-8")).hexdigest()
         
         users = {}
-        if os.path.exists("users.json"):
-            with open("users.json", "r") as f:
+
+        upath = App.get_running_app().user_data_dir
+        save_path = os.path.join(upath, "users.json")
+        if os.path.exists(save_path):
+            with open(save_path, "r") as f:
                 users = json.load(f)
         
         if uname in list(users.keys()):

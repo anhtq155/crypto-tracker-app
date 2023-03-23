@@ -53,9 +53,12 @@ class Exchange(BoxLayout):
         ]
 
         keys = ['KRAKEN', 'OKCOIN']
-        if os.path.exists("keys.json"):
+        upath = App.get_running_app().user_data_dir
+        save_path = os.path.join(upath, "keys.json")
+        if os.path.exists(save_path):
             data = []
-            with open("keys.json", "r") as f:
+
+            with open(save_path, "r") as f:
                 all_keys = json.load(f)
 
             for k,v in all_keys.items():
@@ -168,14 +171,17 @@ class NewExchange(ModalView):
         if self.passphrase:
             data['keys']['passphrase'] = password
 
-        if os.path.exists("keys.json"):
-            with open("keys.json", "r") as f:
+        upath = App.get_running_app().user_data_dir
+        save_path = os.path.join(upath, "keys.json")
+
+        if os.path.exists(save_path):
+            with open(save_path, "r") as f:
                 all_keys = json.load(f)
         else:
             all_keys = {}
 
         all_keys[self.title] = data
-        with open("keys.json", "w") as f:
+        with open(save_path, "w") as f:
             json.dump(all_keys, f)
 
         App.get_running_app().kraken.api_key = api_key

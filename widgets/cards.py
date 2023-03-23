@@ -155,8 +155,8 @@ class Card(ButtonBehavior, BoxLayout):
     chart_data = ListProperty([0, .1])
     daily_prices = ListProperty([0, .1])
     weekly_prices = ListProperty([0, .1])
-    monthly_prices = ListProperty([0, .1])
-    yearly_prices = ListProperty([0, .1])
+    # monthly_prices = ListProperty([0, .1])
+    # yearly_prices = ListProperty([0, .1])
     data = ObjectProperty()
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
@@ -204,7 +204,7 @@ class Card(ButtonBehavior, BoxLayout):
         av.data = self.data
         av.open()
         Clock.schedule_once(lambda x: av.update_graph(), .5)
-
+    
     def get_data(self):
         coin_id = self.data['id']
 
