@@ -19,7 +19,7 @@ class MainWindow(BoxLayout):
             pass
     
     def get_coins(self):
-        mkts = self.cg.get_coins_markets(vs_currency="usd", per_page=10)
+        mkts = self.cg.get_coins_markets(vs_currency="usd", per_page=50)
         self.coins = mkts
 
         # Set coins for all screens

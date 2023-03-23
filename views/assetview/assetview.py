@@ -65,7 +65,7 @@ class AssetView(ModalView):
             target = self.day_data
         elif data_type == 'week':
             target = self.weekly_data
-        #     print(target)
+            print(target)
         # elif data_type == 'month':
         #     target = self.monthly_data
         # elif data_type == 'year':
