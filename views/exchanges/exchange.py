@@ -20,7 +20,6 @@ from widgets.cards import ListTile, Asset
 Builder.load_file('views/exchanges/exchange.kv')
 class Exchange(BoxLayout):
     coins = ListProperty([])
-    popular = ListProperty(['btc', 'eth', 'doge', 'ltc', 'dash', 'shib'])
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         self.cg = CoinGeckoAPI()

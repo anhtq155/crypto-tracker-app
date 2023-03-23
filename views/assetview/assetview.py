@@ -55,6 +55,8 @@ class AssetView(ModalView):
         price_change = str(data['price_change_percentage_24h'])[:4] + "%"
         price_change = price_change.replace("+-", "-")
         self.ids.price_change.text = price_change
+        if price_change.startswith("-"):
+            self.ids.price_change.color = App.get_running_app().colors.danger
     
     def update_graph(self, data_type="day"):
         if data_type == 'hour':
