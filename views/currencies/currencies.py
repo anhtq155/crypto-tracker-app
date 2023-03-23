@@ -15,7 +15,7 @@ from widgets.cards import ListTile, Asset
 Builder.load_file('views/currencies/currencies.kv')
 class Currency(BoxLayout):
     coins = ListProperty([])
-    popular = ListProperty(['btc', 'eth', 'doge'])
+    popular = ListProperty(['btc', 'eth', 'doge','usdc'])
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         self.cg = CoinGeckoAPI()
