@@ -79,7 +79,6 @@ class Overview(BoxLayout):
 
         if okcoin_data['code'] == 200:
             for o in okcoin_data['result']:
-                print(o)
                 all_data.append(o)
         self.balances = all_data        
         

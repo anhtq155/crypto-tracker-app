@@ -32,7 +32,6 @@ class Currency(BoxLayout):
     
     @mainthread
     def on_coins(self, inst, mkts):
-        print(mkts)
         grid = self.ids.gl_currencies
         popular = self.ids.gl_popular
         popular.clear_widgets()
