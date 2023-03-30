@@ -20,14 +20,14 @@
             font_name: app.fonts.heading
             halign: "center"
         Text:
-            text: 'approx 1.4BTC'
+            text: 'approx %sBTC'%str(round(root.current_balance / 28170, 7))
             color: app.colors.white
             font_size: app.fonts.size.h5
             halign: "center"
             size_hint_y: None
             height: dp(18)
         Text:
-            text: '+2.4%'
+            text: '+2.1%'
             color: app.colors.success
             font_size: app.fonts.size.h5
             halign: "center"

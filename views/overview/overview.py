@@ -68,29 +68,28 @@ class Overview(BoxLayout):
             grid.add_widget(a)
 
     def get_data(self):
-        # self.get_watchlist()
-        kraken_data = App.get_running_app().kraken.get_balance()
+        self.get_watchlist()
+        # kraken_data = App.get_running_app().kraken.get_balance()
         okcoin_data = App.get_running_app().okcoin.get_balance()
 
         all_data = []
-        if kraken_data['code'] == 200:
-            for k,v in kraken_data['result'].items():
-                all_data.append(v)
+        # if kraken_data['code'] == 200:
+        #     for k,v in kraken_data['result'].items():
+        #         all_data.append(v)
 
         if okcoin_data['code'] == 200:
             for o in okcoin_data['result']:
+                print(o)
                 all_data.append(o)
-
-        self.balances = all_data
+        self.balances = all_data        
+        
     
     def on_balances(self, inst, balances):
         balances_symbols = [x['currency'] for x in balances]
         balances_balance = [x['balance'] for x in balances]
         coins = App.get_running_app().root.coins
-
         coins = [x for x in coins if x['symbol'].upper() in balances_symbols]
         self.assets = coins
-        
         total = 0
         for i, b in enumerate(balances_balance):
             symbol = balances_symbols[i].lower()
@@ -105,10 +104,7 @@ class Overview(BoxLayout):
         self.current_balance = round(total, 3)
 
     def refresh(self):
-        try:
-            App.get_running_app().root.get_coins()
-        except:
-            pass
+        App.get_running_app().root.get_coins()
         t1 = Thread(target=self.get_data, daemon=True)
         t1.start()
         

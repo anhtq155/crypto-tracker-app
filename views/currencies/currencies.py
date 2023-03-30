@@ -32,6 +32,7 @@ class Currency(BoxLayout):
     
     @mainthread
     def on_coins(self, inst, mkts):
+        print(mkts)
         grid = self.ids.gl_currencies
         popular = self.ids.gl_popular
         popular.clear_widgets()
@@ -48,6 +49,13 @@ class Currency(BoxLayout):
 
         for v in mkts:
             if str(v['symbol']) in self.popular:
+
+                owned = "".join(["0.0", str(v['symbol']).upper()])
+
+                for b in self.coins:
+                    if b['symbol'] == str(v['symbol']).upper():
+                        owned = "%s%s"%(b['balance'], b['symbol'])
+                        break
                 a = Asset()
                 a.text = str(v['symbol']).upper()
                 a.source = v['image']
@@ -55,4 +63,5 @@ class Currency(BoxLayout):
                 a.price_change = v['market_cap_change_percentage_24h']
                 a.data = v
                 a.height = Window.height*.2
+                a.owned = owned
                 popular.add_widget(a)

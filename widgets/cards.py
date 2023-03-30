@@ -149,7 +149,7 @@ Builder.load_string("""
 class Card(ButtonBehavior, BoxLayout):
     source = StringProperty("")
     text = StringProperty("")
-    owned = StringProperty("1BTC")
+    owned = StringProperty("")
     price = NumericProperty(0.0)
     price_change = NumericProperty(0.0)
     chart_data = ListProperty([0, .1])

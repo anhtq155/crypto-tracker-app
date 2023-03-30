@@ -52,7 +52,7 @@ class AssetView(ModalView):
         self.ids.circulating_supply.text = str(data['circulating_supply'])
         self.ids.total_supply.text = str(data['total_supply'])
 
-        price_change = str(data['price_change_percentage_24h'])[:4] + "%"
+        price_change = "+" + str(data['price_change_percentage_24h'])[:4] + "%"
         price_change = price_change.replace("+-", "-")
         self.ids.price_change.text = price_change
         if price_change.startswith("-"):

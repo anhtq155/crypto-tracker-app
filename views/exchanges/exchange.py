@@ -75,7 +75,6 @@ class Exchange(BoxLayout):
                 data.append(e)
             
             exchanges = data
-            print(exchanges)
 
 
         grid = self.ids.gl_connected
