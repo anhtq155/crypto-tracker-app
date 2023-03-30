@@ -15,7 +15,7 @@ from widgets.cards import ListTile, Asset
 Builder.load_file('views/currencies/currencies.kv')
 class Currency(BoxLayout):
     coins = ListProperty([])
-    popular = ListProperty(['btc', 'eth', 'doge','usdc'])
+    popular = ListProperty(['btc', 'eth', 'doge','usdt'])
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
         self.cg = CoinGeckoAPI()
@@ -50,7 +50,6 @@ class Currency(BoxLayout):
             if str(v['symbol']) in self.popular:
 
                 owned = "".join(["0.0", str(v['symbol']).upper()])
-
                 for b in self.coins:
                     if b['symbol'] == str(v['symbol']).upper():
                         owned = "%s%s"%(b['balance'], b['symbol'])
