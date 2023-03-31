@@ -155,8 +155,8 @@ class Card(ButtonBehavior, BoxLayout):
     chart_data = ListProperty([0, .1])
     daily_prices = ListProperty([0, .1])
     weekly_prices = ListProperty([0, .1])
-    monthly_prices = ListProperty([0, .1])
-    yearly_prices = ListProperty([0, .1])
+    # monthly_prices = ListProperty([0, .1])
+    # yearly_prices = ListProperty([0, .1])
     data = ObjectProperty()
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
@@ -199,8 +199,8 @@ class Card(ButtonBehavior, BoxLayout):
         av.source = self.source
         av.day_data = self.daily_prices
         av.weekly_data = self.weekly_prices
-        av.monthly_data = self.monthly_prices
-        av.yearly_data = self.yearly_prices
+        # av.monthly_data = self.monthly_prices
+        # av.yearly_data = self.yearly_prices
         av.data = self.data
         av.open()
         Clock.schedule_once(lambda x: av.update_graph(), .5)
@@ -225,13 +225,13 @@ class Card(ButtonBehavior, BoxLayout):
     def get_all_points(self, coin_id):
         weekly = self.cg.get_coin_market_chart_by_id(coin_id, vs_currency="usd", days=7)
 
-        monthly = self.cg.get_coin_market_chart_by_id(coin_id, vs_currency="usd", days=30)
+        # monthly = self.cg.get_coin_market_chart_by_id(coin_id, vs_currency="usd", days=30)
         
-        yearly = self.cg.get_coin_market_chart_by_id(coin_id, vs_currency="usd", days=365)
+        # yearly = self.cg.get_coin_market_chart_by_id(coin_id, vs_currency="usd", days=365)
 
         self.weekly_prices = [x[1] for x in weekly['prices']]
-        self.monthly_prices = [x[1] for x in monthly['prices']]
-        self.yearly_prices = [x[1] for x in yearly['prices']]
+        # self.monthly_prices = [x[1] for x in monthly['prices']]
+        # self.yearly_prices = [x[1] for x in yearly['prices']]
 
         if self.from_view:
             self.open_view()

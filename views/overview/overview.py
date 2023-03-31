@@ -84,6 +84,7 @@ class Overview(BoxLayout):
         
     
     def on_balances(self, inst, balances):
+        print(balances)
         balances_symbols = [x['currency'] for x in balances]
         balances_balance = [x['balance'] for x in balances]
         coins = App.get_running_app().root.coins
