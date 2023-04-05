@@ -121,8 +121,8 @@ class OKcoin(object):
             ]
         """
         print("Getting balance...")
-        # resp = self.okcoin_request(GET, "/api/spot/v3/accounts")
-        resp = self.okcoin_request(GET, "/api/account/v3/wallet")
+        resp = self.okcoin_request(GET, "/api/spot/v3/accounts")
+        # resp = self.okcoin_request(GET, "/api/account/v3/wallet")
         if not resp:
             return {"code": 404}
         
