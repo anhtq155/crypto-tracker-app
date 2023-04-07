@@ -69,13 +69,13 @@ class Overview(BoxLayout):
 
     def get_data(self):
         self.get_watchlist()
-        # kraken_data = App.get_running_app().kraken.get_balance()
+        kraken_data = App.get_running_app().kraken.get_balance()
         okcoin_data = App.get_running_app().okcoin.get_balance()
 
         all_data = []
-        # if kraken_data['code'] == 200:
-        #     for k,v in kraken_data['result'].items():
-        #         all_data.append(v)
+        if kraken_data['error'] == "":
+            for k,v in kraken_data['result'].items():
+                all_data.append(v)
 
         if okcoin_data['code'] == 200:
             for o in okcoin_data['result']:
@@ -84,7 +84,6 @@ class Overview(BoxLayout):
         
     
     def on_balances(self, inst, balances):
-        print(balances)
         balances_symbols = [x['currency'] for x in balances]
         balances_balance = [x['balance'] for x in balances]
         coins = App.get_running_app().root.coins

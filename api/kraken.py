@@ -57,12 +57,9 @@ class Kraken(object):
         })
 
         if not resp:
-            return {'code': 404}
-        
-        data = {"result": resp.json()}
-        data['code'] = 200
-        print(data)
-        return data
+            return {'error': 404}
+        print("Balance:", resp.json())
+        return resp.json()
 
     def cancel_order(self, order_id):
         resp = self.kraken_request('/0/private/CancelOrder', {
