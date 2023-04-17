@@ -1,0 +1,42 @@
+
+
+
+<Strategy>:
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint_y: .5
+        padding: [dp(12), dp(4)]
+        orientation: 'vertical'
+        Text:
+            text: 'Stragies Backtesting'
+            color: app.colors.primary
+            font_size: app.fonts.size.h1
+            font_name: app.fonts.heading
+            halign: "center"
+        Text:
+            text: "Instructions"
+            color: app.colors.white
+            font_name: app.fonts.body
+            font_size: app.fonts.size.h4
+        Text:
+            text: "- Use the command line to use. "
+            color: app.colors.white
+            font_name: app.fonts.body
+            font_size: app.fonts.size.h5
+    BoxLayout:
+        size_hint_y: .5
+        padding: [dp(12), dp(4)]
+        spacing: dp(8)
+        orientation: 'vertical'
+        RoundedButton:
+            text: "Start"
+            color: app.colors.white
+            font_name: app.fonts.subheading
+            radius: [dp(8)]
+            bcolor: app.colors.primary
+            size_hint_y: None
+            height: dp(42)
+            on_release: root.render()
+    
+
+    
