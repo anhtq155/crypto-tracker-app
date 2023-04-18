@@ -7,18 +7,18 @@
 	orientation: 'vertical'
 	ScreenManager:
 		id: scrn_mngr
-		Screen:
-			name: 'scrn_overview'
-			Overview:
-				id: overview
-		Screen:
-            name: 'scrn_coins'
-            Currency:
-                id: currency
-		Screen:
-			name: 'scrn_exchanges'
-			Exchange:
-				id: exchange
+		# Screen:
+		# 	name: 'scrn_overview'
+		# 	Overview:
+		# 		id: overview
+		# Screen:
+        #     name: 'scrn_coins'
+        #     Currency:
+        #         id: currency
+		# Screen:
+		# 	name: 'scrn_exchanges'
+		# 	Exchange:
+		# 		id: exchange
 		Screen:
 			name: 'scrn_strategies'
 			Strategy:
@@ -30,6 +30,7 @@
 			size_hint_x: .5
 			spacing: dp(12)
 			padding: [dp(8), dp(8)]
+			padding_right: 12
 			halign: "center"
 			TabIcon:
 				text: icon("icon-dollar-sign")

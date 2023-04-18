@@ -13,13 +13,6 @@ STRAT_PARAMS = {
         "kijun": {"name": "Kijun Period", "type": int},
         "tenkan": {"name": "Tenkan Period", "type": int},
     },
-    "sup_res": {
-        "min_points": {"name": "Min. Points", "type": int},
-        "min_diff_points": {"name": "Min. Difference between Points", "type": int},
-        "rounding_nb": {"name": "Rounding Number", "type": float},
-        "take_profit": {"name": "Take Profit %", "type": float},
-        "stop_loss": {"name": "Stop Loss %", "type": float},
-    },
 }
 
 
