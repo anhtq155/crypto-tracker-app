@@ -21,5 +21,5 @@ def backtest(df: pd.DataFrame, ma_period: int):
     df["max_cum_pnl"] = df["cum_pnl"].cummax()
     df["drawdown"] = df["max_cum_pnl"] - df["cum_pnl"]
     
-    #print(df)
+    print(df)
     return df["pnl"].sum(), df["drawdown"].max()

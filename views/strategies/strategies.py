@@ -87,7 +87,7 @@ class Strategy(BoxLayout):
                 break
 
         if mode == "Get data from CEX":
-            collect_all(client, exchange, symbol)
+            collect_all(self, client, exchange, symbol)
 
         elif mode == "Backtest data":
 
@@ -144,11 +144,10 @@ class Strategy(BoxLayout):
                 except ValueError:
                     continue
 
-            print("(Profit & Lost, Maximum DrawDown): ", run(self, exchange, symbol, strategy, tf, from_time, to_time))
+            # print("(Profit & Lost, Maximum DrawDown): ", run(self, exchange, symbol, strategy, tf, from_time, to_time))
 
             # open a popup
-            popup_pnl, _ = run(self, exchange, symbol, strategy, tf, from_time, to_time)
-            _, popup_drawdown = run(self, exchange, symbol, strategy, tf, from_time, to_time)
+            popup_pnl, popup_drawdown = run(self, exchange, symbol, strategy, tf, from_time, to_time)
 
             popup_content = BackBox(orientation="vertical")
             popup_content.add_widget(Label(text="Profit & Lost: " + str(round(popup_pnl * 100, 2)) + "%"))

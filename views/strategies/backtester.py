@@ -6,19 +6,19 @@ from .strategies_init import ichimoku
 
 def run(self, exchange: str, symbol: str, strategy: str, tf: str, from_time: int, to_time: int):
 
-    params_des = STRAT_PARAMS[strategy]
-
+    p = {"type": int}
     params = dict()
 
-    for p_code, p in params_des.items():
-        while True:
-            try:
-                # params[p_code] = p["type"](input(p["name"] + ": "))
-                params[p_code] = p["type"](self.ids.ma_period.text.strip())
-                break
-            except ValueError:
-                continue
-
+    try:
+        # params[p_code] = p["type"](input(p["name"] + ": "))
+        if (strategy == "obv"):
+            params["ma_period"] = p["type"](self.ids.ma_period.text.strip())
+        elif (strategy == "ichimoku"):
+            params["kijun"] = p["type"](self.ids.kijun.text.strip())
+            params["tenkan"] = p["type"](self.ids.tenkan.text.strip())
+    except:
+        pass
+    
     if strategy == "obv":
         h5_db = Hdf5Client(exchange)
         data = h5_db.get_data(symbol, from_time, to_time)

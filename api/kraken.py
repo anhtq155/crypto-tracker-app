@@ -11,10 +11,10 @@ class Kraken(object):
     api_url = "https://api.kraken.com"
 
     # Get from: https://www.okcoin.com/account/my-api/create (Must be signed in obviously)
-    # api_key = "/sk12162sZfc6L7kohoUg7dpPOQfV88ejSwNUpLHvi2UhaX4HwmzT0BX"    
-    # api_sec = "ejLSo7/JmSeBeBW5y33vxJC7QoK/o7yJyYyl9eHyXONJn45Wt/Q639xboW399BJiWf2eiefFuEqQ0qOZ8Pi/mQ=="
-    api_key = "tQlb2OyuestuYxc57iHQ8N/8VPIxT7CGi60Nfpz/y5yoWa2SrG3GJwwH"    
-    api_sec = "tLLJdOLEarKDzh++7a/gmnq3WmCPKw1y+YaSIZ3n2ahRT+896EY71iIfBVh31XTWnu0Hw7PapcdggF0f0fSvnQ=="
+    # api_key = "jH7cEtEN8+gLEOFVt/8U8CdWTezNuida7jiL3JUbBiTcz6RFTTqF32v0"    
+    # api_sec = "jipFE9uK9OBLC5PyWhpHkQPVMkrXRrzCITl3pv0dLl85lAxx0IR1wTqhAZNDfp3aKkRPmyLHIIkbj7IDNs8hgA=="
+    api_key = None
+    api_sec = None
 
     def get_kraken_signature(self, urlpath, data):
         postdata = urllib.parse.urlencode(data)

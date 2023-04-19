@@ -7,29 +7,38 @@ from .database import Hdf5Client
 from .utils import *
 from .cexchanges.binance import BinanceClient
 from .cexchanges.ftx import FtxClient
+from views.assetview import Alert
 
 
 logger = logging.getLogger()
 
 
-def collect_all(client: Union[BinanceClient, FtxClient], exchange: str, symbol: str):
+def collect_all(self, client: Union[BinanceClient, FtxClient], exchange: str, symbol: str):
     start_time = time.time()
+    self.alert = Alert()
+
     h5_db = Hdf5Client(exchange)
     h5_db.create_dataset(symbol)
 
     oldest_ts, most_recent_ts = h5_db.get_first_last_timestamp(symbol)
 
-    # Initial Request
+    # Initial Request 
 
     if oldest_ts is None:
         data = client.get_historical_data(symbol, end_time=int(time.time() * 1000) - 60000)
 
         if len(data) == 0:
             logger.warning("%s %s: no initial data found", exchange, symbol)
+            self.alert.text = str("no initial data found")
+            self.alert.open()
             return
         else:
             logger.info("%s %s: Collected %s initial data from %s to %s", exchange, symbol, len(data),
                         ms_to_dt(data[0][0]), ms_to_dt(data[-1][0]))
+            
+            self.alert.text = str("Collected %s initial data from %s to %s" % (len(data),
+                        ms_to_dt(data[0][0]), ms_to_dt(data[-1][0])))
+            self.alert.open()
 
         oldest_ts = data[0][0]
         most_recent_ts = data[-1][0]
@@ -83,6 +92,9 @@ def collect_all(client: Union[BinanceClient, FtxClient], exchange: str, symbol: 
         if len(data) == 0:
             logger.info("%s %s: Stopped older data collection because no data was found before %s", exchange, symbol,
                         ms_to_dt(oldest_ts))
+            self.alert.text = str("Stopped older data collection because no data was found before %s" % (ms_to_dt(oldest_ts)))
+            self.alert.open()
+
             break
 
         data_to_insert = data_to_insert + data
@@ -96,12 +108,14 @@ def collect_all(client: Union[BinanceClient, FtxClient], exchange: str, symbol: 
 
         logger.info("%s %s: Collected %s older data from %s to %s", exchange, symbol, len(data),
                     ms_to_dt(data[0][0]), ms_to_dt(data[-1][0]))
+        self.alert.text = str("Collected %s older data from %s to %s" % (len(data),
+                    ms_to_dt(data[0][0]), ms_to_dt(data[-1][0])))
+        self.alert.open()
 
         time.sleep(1.1)
 
         elapsed_time = time.time() - start_time
-        print(elapsed_time)
-        if elapsed_time > 20:
+        if elapsed_time > 15:
             break
 
     h5_db.write_data(symbol, data_to_insert)

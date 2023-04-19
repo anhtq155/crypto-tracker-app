@@ -5,6 +5,7 @@ import time
 import h5py
 import numpy as np
 import pandas as pd
+from views.assetview import Alert
 
 
 logger = logging.getLogger()
@@ -14,6 +15,8 @@ class Hdf5Client:
     def __init__(self, exchange: str):
         self.hf = h5py.File(f"views/strategies/datas/{exchange}.h5", 'a')
         self.hf.flush()
+        self.alert = Alert()
+
 
     def create_dataset(self, symbol: str):
         if symbol not in self.hf.keys():
@@ -68,6 +71,8 @@ class Hdf5Client:
         query_time = round((time.time() - start_query), 2)
 
         logger.info("Retrieved %s %s data from database in %s seconds", len(df.index), symbol, query_time)
+        self.alert.text = str("Retrieved %s %s data from database in %s seconds" % (len(df.index), symbol, query_time))
+        self.alert.open()
 
         return df
 
