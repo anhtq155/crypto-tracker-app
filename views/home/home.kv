@@ -1,6 +1,7 @@
 #: import Overview views.overview.Overview
 #: import Currency views.currencies.Currency
 #: import Exchange views.exchanges.Exchange
+#: import Strategy views.strategies.Strategy
 
 <Home>:
 	orientation: 'vertical'
@@ -18,13 +19,18 @@
 			name: 'scrn_exchanges'
 			Exchange:
 				id: exchange
+		Screen:
+			name: 'scrn_strategies'
+			Strategy:
+				id: strategy
 	AnchorLayout:
 		size_hint_y: None
 		height: dp(54)
 		BoxLayout:
 			size_hint_x: .5
 			spacing: dp(12)
-			padding: [dp(8), dp(8)]
+			padding: [dp(6), dp(12)]
+			halign: "center"
 			TabIcon:
 				text: icon("icon-dollar-sign")
 				on_release: 
@@ -41,6 +47,11 @@
 				on_release: 
 					self.state = "down"
 					scrn_mngr.current = "scrn_exchanges"
+			TabIcon:
+				text: icon("icon-home")
+				on_release: 
+					self.state = "down"
+					scrn_mngr.current = "scrn_strategies"
 
 <TabIcon@ToggleButton>:
 	background_color: [0,0,0,0]

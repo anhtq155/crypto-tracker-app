@@ -54,6 +54,14 @@
                     spacing: dp(8)
                     size_hint_y: None
                     height: self.minimum_height
+        FlatButton:
+            text: "Log out"
+            color: app.colors.danger
+            font_name: app.fonts.body
+            radius: [dp(8)]
+            height: dp(42)
+            valign: "top"
+            on_release: app.root.ids.scrn_mngr.current = 'scrn_signin'
 
 <ConnectedExchange>:
     size_hint: [None, None]
