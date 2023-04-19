@@ -13,7 +13,7 @@ logger = logging.getLogger()
 
 
 def collect_all(client: Union[BinanceClient, FtxClient], exchange: str, symbol: str):
-
+    start_time = time.time()
     h5_db = Hdf5Client(exchange)
     h5_db.create_dataset(symbol)
 
@@ -99,7 +99,13 @@ def collect_all(client: Union[BinanceClient, FtxClient], exchange: str, symbol: 
 
         time.sleep(1.1)
 
+        elapsed_time = time.time() - start_time
+        print(elapsed_time)
+        if elapsed_time > 20:
+            break
+
     h5_db.write_data(symbol, data_to_insert)
+
 
 
 

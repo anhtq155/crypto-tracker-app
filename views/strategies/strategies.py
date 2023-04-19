@@ -1,13 +1,18 @@
 import datetime
+import time
 
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 
 from .backtester import run
 from .utils import TF_EQUIV
 from .data_collector import collect_all
 from .cexchanges.binance import BinanceClient
 from .cexchanges.ftx import FtxClient
+
+from widgets.box import BackBox
 
 Builder.load_file('views/strategies/strategies.kv')
 class Strategy(BoxLayout):
@@ -140,7 +145,17 @@ class Strategy(BoxLayout):
                     continue
 
             print("(Profit & Lost, Maximum DrawDown): ", run(self, exchange, symbol, strategy, tf, from_time, to_time))
-                
+
+            # open a popup
+            popup_pnl, _ = run(self, exchange, symbol, strategy, tf, from_time, to_time)
+            _, popup_drawdown = run(self, exchange, symbol, strategy, tf, from_time, to_time)
+
+            popup_content = BackBox(orientation="vertical")
+            popup_content.add_widget(Label(text="Profit & Lost: " + str(round(popup_pnl * 100, 2)) + "%"))
+            popup_content.add_widget(Label(text="Maximum Drawdown: " + str(round(popup_drawdown * 100, 2)) + "%"))
+
+            popup = Popup(title="Results", content=popup_content, size_hint=(0.9, 0.3))
+            popup.open()
 
         
 

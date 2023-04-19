@@ -5,6 +5,7 @@ from kivy.metrics import dp, sp
 from kivy.utils import rgba, QueryDict
 from kivy.properties import ColorProperty, ListProperty
 
+
 Builder.load_string('''
 <BackBox>:
     canvas.before:
@@ -20,4 +21,5 @@ class BackBox(BoxLayout):
     radius = ListProperty([.5])
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
+
  
