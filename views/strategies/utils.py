@@ -7,11 +7,11 @@ TF_EQUIV = {"1m": "1Min", "5m": "5Min", "15m": "15Min", "30m": "30Min", "1h": "1
 
 STRAT_PARAMS = {
     "obv": {
-        "ma_period": {"name": "MA Period", "type": int},
+        "ma_period": {"name": "MA Period", "type": int, "min": 2, "max": 200},
     },
     "ichimoku": {
-        "kijun": {"name": "Kijun Period", "type": int},
-        "tenkan": {"name": "Tenkan Period", "type": int},
+        "kijun": {"name": "Kijun Period", "type": int, "min": 2, "max": 200},
+        "tenkan": {"name": "Tenkan Period", "type": int, "min": 2, "max": 200},
     },
 }
 

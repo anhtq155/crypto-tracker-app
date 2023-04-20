@@ -1,12 +1,7 @@
 #:import Factory kivy.factory.Factory
 
-<MySpinnerOption@SpinnerOption>:
-    background_color: app.colors.bg
-    background_radius: [dp(8)]
-    padding: [dp(6), (self.height - self.line_height)/2]
-    height: dp(30)
 
-<Strategy>:
+<Optimize>:
     orientation: "vertical"
     spacing: dp(12)
     padding: dp(12)
@@ -14,7 +9,7 @@
         orientation: "vertical"
         size_hint_y: .2
         Text:
-            text: "Strategies Backtester"
+            text: "Strategies Optimizer"
             color: app.colors.primary
             font_size: app.fonts.size.h2
             font_name: app.fonts.heading
@@ -32,18 +27,6 @@
         size_hint_y: .8
         spacing: dp(12)
         valign: "top"
-        BackBox:
-            radius: [dp(8)]
-            padding: [dp(8), 0]
-            size_hint_y: None
-            height: dp(30)
-            bcolor: app.colors.secondary
-            BlankSpinner:
-                id: mode
-                text: "Choose the program mode"
-                values: ['Get data from CEX', 'Backtest data']
-                option_cls: Factory.get("MySpinnerOption")
-                on_text: root.onclick_mode()
         BackBox:
             radius: [dp(8)]
             size_hint_y: None
@@ -68,21 +51,17 @@
         BackBox:
             id: backbox_strategy
             radius: [dp(8)]
-            opacity: 0
             size_hint_y: None
             height: dp(30)
             padding: [dp(8), 0]
             bcolor: app.colors.secondary
             BlankSpinner:
                 id: strategy
-                disabled: True
                 text: "Choose a strategy"
                 values: ['On-balance volume', 'Ichimoku Kinko Hyo']
                 option_cls: Factory.get("MySpinnerOption")
-                on_text: root.onclick_strategy()
         BackBox:
             id: backbox_timeframe
-            opacity: 0
             radius: [dp(8)]
             padding: [dp(8), 0]
             size_hint_y: None
@@ -90,13 +69,11 @@
             bcolor: app.colors.secondary
             BlankSpinner:
                 id: timeframe
-                disabled: True
                 text: "Choose a timeframe"
                 values: ['1m', '5m', '15m', '30m', '1h', '4h', '12h', '1d']
                 option_cls: Factory.get("MySpinnerOption")
         BackBox:
             id: backbox_from_time
-            opacity: 0
             radius: [dp(8)]
             size_hint_y: None
             height: dp(30)
@@ -104,12 +81,10 @@
             bcolor: app.colors.secondary
             BlankTextField:
                 id: from_time
-                disabled: True
                 halign: 'center'
                 hint_text: "Backtest from (yyyy-mm-dd) or default"
         BackBox:
             id: backbox_to_time
-            opacity: 0
             radius: [dp(8)]
             padding: [dp(8), 0]
             size_hint_y: None
@@ -117,66 +92,51 @@
             bcolor: app.colors.secondary
             BlankTextField:
                 id: to_time
-                disabled: True
                 halign: 'center'
                 hint_text: "Backtest to (yyyy-mm-dd) or default"
         BackBox:
-            id: backbox_ma_period
-            opacity: 0
+            id: backbox_popsize
             radius: [dp(8)]
             size_hint_y: None
             height: dp(30)
             padding: [dp(8), 0]
             bcolor: app.colors.secondary
             BlankTextField:
-                id: ma_period
+                id: popsize
                 halign: 'center'
-                disabled: True
-                hint_text: "Moving Average Period"
+                hint_text: "Choose a population size"
         BackBox:
-            id: backbox_kijun
-            opacity: 0
+            id: backbox_gennum
             radius: [dp(8)]
             size_hint_y: None
             height: dp(30)
             padding: [dp(8), 0]
             bcolor: app.colors.secondary
             BlankTextField:
-                id: kijun
+                id: gennum
                 halign: 'center'
-                disabled: True
-                hint_text: "Kijun Period"
-        BackBox:
-            id: backbox_tenkan
-            opacity: 0
-            radius: [dp(8)]
+                hint_text: "Choose a number of generations"
+        Widget:
             size_hint_y: None
-            height: dp(30)
-            padding: [dp(8), 0]
-            bcolor: app.colors.secondary
-            BlankTextField:
-                id: tenkan
-                halign: 'center'
-                disabled: True
-                hint_text: "Tenkan Period"
+            height: dp(72)
     RoundedButton:
-        text: "Start"
+        text: "Optimize"
         color: app.colors.white
         font_name: app.fonts.subheading
         radius: [dp(8)]
         bcolor: app.colors.primary
         size_hint_y: None
         height: dp(30)
-        on_release: root.render()
+        on_release: root.optimize()
     FlatButton:
-        text: "Optimize backtesting data"
+        text: "Back"
         color: app.colors.primary
         font_name: app.fonts.body
         radius: [dp(8)]
         size_hint_y: None
-        height: dp(16)
+        height: dp(20)
         valign: "top"
-        on_release: app.root.ids.scrn_mngr.current = 'scrn_optimize'
+        on_release: app.root.ids.scrn_mngr.current = 'scrn_home'
     
 
     
