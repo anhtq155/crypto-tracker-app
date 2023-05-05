@@ -16,6 +16,8 @@ from pycoingecko import CoinGeckoAPI
 from threading import Thread
 
 from widgets.cards import ListTile, Asset
+from views.assetview import Alert
+
 
 Builder.load_file('views/exchanges/exchange.kv')
 class Exchange(BoxLayout):
@@ -137,6 +139,7 @@ class NewExchange(ModalView):
     title = StringProperty("")
     def __init__(self, **kw) -> None:
         super().__init__(**kw)
+        self.alert = Alert()
 
     def add_account(self):
         api_key = self.ids.key.text.strip()
@@ -148,11 +151,15 @@ class NewExchange(ModalView):
 
         if api_key == "" or api_secret == "":
             print("Invalid api keys")
+            self.alert.text = "Invalid api keys"
+            self.alert.open()
             return
 
         if self.passphrase:
             if password == "":
                 print("Invalid passphrase")
+                self.alert.text = "Invalid passphrase"
+                self.alert.open()
                 return
         
         data = {
